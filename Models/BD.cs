@@ -12,9 +12,9 @@ public static class BD
     private static string _connectionString = @"Server=localhost; DataBase=BD; Integrated Security=True; TrustServerCertificate=True;";
     public static Usuario TraerUsuario(string username)
     {
+        string query = "SELECT * FROM Usuarios WHERE Username = @Username";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT * FROM Usuarios WHERE Username = @Username";
             Usuario usuario = connection.QueryFirstOrDefault<Usuario>(query, new { Username });
             return usuario;
         }
@@ -46,20 +46,27 @@ public static class BD
     }
     public static List<Tareas> TraerTareas(int IdUsuario)
     {
+        string query = "SELECT * FROM Tareas WHERE IdUsuario = @pIdUsuario AND Eliminada = 0";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT * FROM Tareas WHERE IdUsuario = @pIdUsuario";
             List<Tarea> tareas = connection.Query<Tarea>(query, new { pIdUsuario = IdUsuario }).ToList();
             return tareas;
         }
     }
     public static void CrearTarea(Tarea tarea)
     {
-
         string query = "INSERT INTO Tareas (Titulo, Descripcion, Fecha, Finalizada, Eliminada, IdUsuario) VALUES (@PTitulo, @PDescripcion, @PFecha, @PFinalizada, @PEliminada, @PIdUsuario)";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario  });
+        }
+    }
+    public static void EliminarTarea(int IdTarea)
+    {
+        string query = "DELETE FROM Tareas WHERE Id = @IdTarea";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { IdTarea = IdTarea });
         }
     }
 }
