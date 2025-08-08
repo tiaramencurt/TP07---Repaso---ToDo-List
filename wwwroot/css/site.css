@@ -9,7 +9,7 @@ html {
   }
 }
 
-/* Fuente moderna y colores suaves */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #e3f2fd, #fce4ec);
@@ -17,7 +17,7 @@ body {
     padding: 0;
 }
 
-/* Contenedores principales */
+
 div, form {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 15px;
@@ -29,13 +29,13 @@ div, form {
     backdrop-filter: blur(10px);
 }
 
-/* Títulos */
+
 h1, p {
     text-align: center;
     color: #333;
 }
 
-/* Inputs y checkbox */
+
 input[type="text"],
 input[type="password"],
 input[type="file"],
@@ -58,12 +58,12 @@ textarea:focus {
     box-shadow: 0 0 8px rgba(66,165,245,0.4);
 }
 
-/* Checkbox y etiquetas */
+
 input[type="checkbox"] {
     margin-right: 5px;
 }
 
-/* Botones */
+
 input[type="submit"] {
     width: 100%;
     padding: 2%;
@@ -81,7 +81,7 @@ input[type="submit"]:hover {
     transform: scale(1.03);
 }
 
-/* Lista de tareas */
+
 ul {
     list-style: none;
     padding: 0;
@@ -98,7 +98,6 @@ ul li {
     font-size: 0.95em;
 }
 
-/* Links */
 a {
     display: inline-block;
     margin: 10px auto;
@@ -114,7 +113,7 @@ a:hover {
     background: linear-gradient(90deg, #66bb6a, #81c784);
 }
 
-/* Errores */
+
 p {
     margin-top: 5px;
 }
@@ -126,7 +125,7 @@ p:has(> .error),
     text-align: center;
 }
 
-/* Responsive */
+
 @media (max-width: 600px) {
     form, div {
         width: 95%;
