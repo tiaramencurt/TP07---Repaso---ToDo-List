@@ -25,12 +25,13 @@ public class Tarea
     public Tarea()
     {
     }
-    public Tarea(string titulo, string descripcion, DateTime fecha)
+    public Tarea(string titulo, string descripcion, DateTime fecha, int idUsuario)
     {
         this.Titulo = titulo;
         this.Descripcion = descripcion;
         this.Fecha = fecha;
         this.Finalizada = false;
         this.Eliminada = false;
+        this.IdUsuario = idUsuario;
     }
 }

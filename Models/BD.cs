@@ -53,5 +53,20 @@ public static class BD
             return tareas;
         }
     }
+    public static void CrearTarea(Usuario usuario)
+    {
+        if(TraerUsuario(usuario.Username) == null)
+        {
+            string query = "INSERT INTO Usuario (Username, Password, Nombre, Apellido, Foto) VALUES (@PUsername, @PPassword, @PNombre, @PApellido, @PFoto)";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Execute(query, new { PUsername = usuario.Username, PPassword = usuario.Password, PNombre = usuario.Nombre, PApellido = usuario.Apellido, PFoto = usuario.Foto  });
+            }
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
 
 }
