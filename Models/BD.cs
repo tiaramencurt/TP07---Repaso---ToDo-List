@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using BCrypt.Net;
 namespace TP07.Models;
 
 public static class BD
@@ -18,7 +19,25 @@ public static class BD
             return usuario;
         }
     }
-    public static void Registrarse(Usuario usuario)
+    public static Usuario Login(string username, string password)
+    {
+        Usuario usuario = TraerUsuario(username);
+        if(usuario == null)
+        {
+            usuario = null;   
+        }else
+        {
+            if(!BCrypt.Net.BCrypt.Verify(password, usuario.Password))
+            {
+                usuario = null; 
+            }
+        }
+        return usuario;
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+        }
+    }
+    public static bool Registrarse(Usuario usuario)
     {
         if(TraerUsuario(usuario.Username) == null)
         {
