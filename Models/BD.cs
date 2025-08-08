@@ -33,7 +33,7 @@ public static class BD
     {
         if(TraerUsuario(usuario.Username) == null)
         {
-            string query = "INSERT INTO Usuario (Username, Password, Nombre, Apellido, Foto) VALUES (@PUsername, @PPassword, @PNombre, @PApellido, @PFoto)";
+            string query = "INSERT INTO Usuarios (Username, Password, Nombre, Apellido, Foto) VALUES (@PUsername, @PPassword, @PNombre, @PApellido, @PFoto)";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Execute(query, new { PUsername = usuario.Username, PPassword = usuario.Password, PNombre = usuario.Nombre, PApellido = usuario.Apellido, PFoto = usuario.Foto  });
@@ -53,20 +53,13 @@ public static class BD
             return tareas;
         }
     }
-    public static void CrearTarea(Usuario usuario)
+    public static void CrearTarea(Tarea tarea)
     {
-        if(TraerUsuario(usuario.Username) == null)
+
+        string query = "INSERT INTO Tareas (Titulo, Descripcion, Fecha, Finalizada, Eliminada, IdUsuario) VALUES (@PTitulo, @PDescripcion, @PFecha, @PFinalizada, @PEliminada, @PIdUsuario)";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "INSERT INTO Usuario (Username, Password, Nombre, Apellido, Foto) VALUES (@PUsername, @PPassword, @PNombre, @PApellido, @PFoto)";
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Execute(query, new { PUsername = usuario.Username, PPassword = usuario.Password, PNombre = usuario.Nombre, PApellido = usuario.Apellido, PFoto = usuario.Foto  });
-            }
-            return true;
-        }else
-        {
-            return false;
+            connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario  });
         }
     }
-
 }
