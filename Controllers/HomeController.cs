@@ -17,4 +17,33 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    public IActionResult CargarTareas(int idUsuario)
+    {
+        List<Tarea> tareas = BD.TraerTareas(idUsuario);
+        return View("VerTareas", tareas);
+    }
+
+    public IActionResult CrearTarea(string Titulo, string Descripcion, DateTime fecha, bool Finalizada)
+    {
+        return View("CrearTarea");
+    }
+
+    public IActionResult FinalizarTarea(bool Finalizada)
+    {
+        // nc si falta algo
+        return View("VerTareas");
+    }
+
+    public IActionResult EliminarTarea(bool Finalizada)
+    { 
+        // faltan cosas
+        return View("VerTareas");
+    }
+
+    public IActionResult EditarTarea(string Titulo, string Descripcion, DateTime fecha, bool Finalizada)
+    {
+        return View("ModificarTarea");
+    }
+
 }

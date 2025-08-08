@@ -2,7 +2,8 @@
     ViewData["Title"] = "Modificar tarea";
 }
 
-<form action='@Url.Action("CrearTarea", "Home")' method="post">
+<h1>Modificar tareas</h1>
+<form action='@Url.Action("ModificarTarea", "Home")' method="post">
     <input type="text" name="Titulo" placeholder="Ingresar tarea" required/>
     <input type="text" name="Descripcion" placeholder="Ingresar descripción" required/>
     <input type="text" name="Fecha" placeholder="Ingresar fecha de realización de la tarea" required/>
