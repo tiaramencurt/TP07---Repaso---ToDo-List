@@ -9,21 +9,28 @@ namespace TP07.Models;
 public static class BD
 {
     private static string _connectionString = @"Server=localhost; DataBase=BD; Integrated Security=True; TrustServerCertificate=True;";
-    public static Integrante TraerTareas(string mail)
+    public static Usuario TraerUsuario(string username)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT * FROM Integrante WHERE mail = @mail";
-            Integrante integrante = connection.QueryFirstOrDefault<Integrante>(query, new { mail });
-            return integrante;
+            string query = "SELECT * FROM Usuarios WHERE Username = @Username";
+            Usuario usuario = connection.QueryFirstOrDefault<Usuario>(query, new { Username });
+            return usuario;
         }
     }
-    public static void GuardarIntegrante(Integrante integrante)
+    public static void Registrarse(Usuario usuario)
     {
-        string query = "INSERT INTO Integrante (mail, contraseña, nombre, nombreEquipo, apellido, genero, fechaNacimiento, datoCurioso, foto) VALUES (@pmail, @pcontraseña, @pnombre, @pnombreEquipo, @papellido, @pgenero, @pfechaNacimiento, @pdatoCurioso, @pfoto)";
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        if(TraerUsuario(usuario.Username) == null)
         {
-            connection.Execute(query, new { pmail = integrante.mail, pcontraseña = integrante.contraseña, pnombre = integrante.nombre, pnombreEquipo = integrante.nombreEquipo, papellido = integrante.apellido, pgenero = integrante.genero, pfechaNacimiento = integrante.fechaNacimiento, pdatoCurioso = integrante.datoCurioso, pfoto = integrante.foto });
+            string query = "INSERT INTO Usuario (Username, Password, Nombre, Apellido, Foto) VALUES (@PUsername, @PPassword, @PNombre, @PApellido, @PFoto)";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Execute(query, new { PUsername = usuario.Username, PPassword = usuario.Password, PNombre = usuario.Nombre, PApellido = usuario.Apellido, PFoto = usuario.Foto  });
+            }
+            return true;
+        }else
+        {
+            return false;
         }
     }
     public static List<Tareas> TraerTareas(int IdUsuario)
