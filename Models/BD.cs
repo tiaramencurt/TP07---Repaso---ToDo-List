@@ -79,4 +79,14 @@ public static class BD
             connection.Execute(query, new {     PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario, PId = tarea.Id });
         }
     }
+
+    public static void FinalizarTarea(int IdTarea)
+    {
+        string query = "UPDATE Tareas SET Finalizada = 1 WHERE Id = @IdTarea";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { IdTarea = IdTarea });
+        }
+    }
+
 }
