@@ -61,12 +61,22 @@ public static class BD
             connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario  });
         }
     }
+
     public static void EliminarTarea(int IdTarea)
     {
         string query = "DELETE FROM Tareas WHERE Id = @IdTarea";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Execute(query, new { IdTarea = IdTarea });
+        }
+    }
+
+    public static void ActualizarTarea(Tarea tarea)
+    {
+        string query = @"UPDATE Tareas SET Titulo = @PTitulo, Descripcion = @PDescripcion, Fecha = @PFecha, Finalizada = @PFinalizada, Eliminada = @PEliminada, IdUsuario = @PIdUsuario WHERE Id = @PId";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new {     PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario, PId = tarea.Id });
         }
     }
 }
