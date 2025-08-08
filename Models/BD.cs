@@ -22,19 +22,11 @@ public static class BD
     public static Usuario Login(string username, string password)
     {
         Usuario usuario = TraerUsuario(username);
-        if(usuario == null)
-        {
-            usuario = null;   
-        }else
-        {
-            if(!BCrypt.Net.BCrypt.Verify(password, usuario.Password))
-            {
-                usuario = null; 
-            }
-        }
-        return usuario;
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
+            string query = "SELECT * FROM Usuarios WHERE Username = @Username AND Password = @Password";
+            Usuario usuario = connection.QueryFirstOrDefault<Usuario>(query, new { Username = username, Password = password });
+            return usuario;
         }
     }
     public static bool Registrarse(Usuario usuario)
