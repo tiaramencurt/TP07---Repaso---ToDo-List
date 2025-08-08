@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+
+<a href='@Url.Action("IrIniciarSesion", "Home")'>Iniciar sesión</a>
+<div>
+    <h1>Registrarse</h1>
+    <form action='@Url.Action("Registrarse", "Home")' method="post">
+        <input type="text" name="Usuario" placeholder="Ingresar nombre de usuario" required/>
+        <input type="password" name="Contraseña1" placeholder="Ingresar contraseña" required/>
+        <input type="password" name="Contraseña2" placeholder="Ingresar de nuevo la contraseña" required/>
+        <input type="text" name="Nombre" placeholder="Ingresar nombre" required/>
+        <input type="text" name="Apellido" placeholder="Ingresar apellido" required/>
+        <input type="file" name="Foto"/>
+        <input type="submit" value="Guardar datos" required/>
+        @if(ViewBag.mailExiste)
+        {
+            <p>El usuario ingresado ya fue registrado anteriormente</p>
+        }
+        @if(!ViewBag.contraseñaCoincide)
+        {
+            <p>Ambas contraseñas no coinciden</p>
+        }
+    </form>
+</div>

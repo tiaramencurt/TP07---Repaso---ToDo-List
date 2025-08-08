@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Lista de tareas";
+}
+
+<div>
+    <p>Tareas pendientes:</p>
+        <ul>
+        @foreach(Tarea tarea in ListaTareas)
+        {
+            <li>@Tarea.Titulo</li>
+            <li>@Tarea.Descripcion</li>
+            <li>@Tarea.Fecha</li>
+            <li>@Tarea.Finalizada</li>
+        }
+        </ul>
+</div>
