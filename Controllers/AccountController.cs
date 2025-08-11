@@ -16,6 +16,7 @@ public class AccountController : Controller
     public IActionResult Login()
     {
         ViewBag.mailExiste = true;
+        ViewBag.contraseñaCoincide = true;
         return View("Login");
     }
     [HttpPost]
