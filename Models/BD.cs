@@ -15,13 +15,12 @@ public static class BD
         string query = "SELECT * FROM Usuarios WHERE Username = @Username";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            Usuario usuario = connection.QueryFirstOrDefault<Usuario>(query, new { Username });
+            Usuario usuario = connection.QueryFirstOrDefault<Usuario>(query, new { Username = username});
             return usuario;
         }
     }
     public static Usuario Login(string username, string password)
     {
-        Usuario usuario = TraerUsuario(username);
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             string query = "SELECT * FROM Usuarios WHERE Username = @Username AND Password = @Password";
@@ -44,7 +43,7 @@ public static class BD
             return false;
         }
     }
-    public static List<Tareas> TraerTareas(int IdUsuario)
+    public static List<Tarea> TraerTareas(int IdUsuario)
     {
         string query = "SELECT * FROM Tareas WHERE IdUsuario = @pIdUsuario AND Eliminada = 0";
         using (SqlConnection connection = new SqlConnection(_connectionString))
