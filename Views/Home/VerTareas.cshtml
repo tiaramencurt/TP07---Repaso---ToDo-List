@@ -5,12 +5,12 @@
 <div>
     <p>Tareas pendientes:</p>
         <ul>
-        @foreach(Tarea tarea in tareas)
+        @foreach(Tarea tarea in ViewBag.tareas)
         {
-            <li>@Tarea.Titulo</li>
-            <li>@Tarea.Descripcion</li>
-            <li>@Tarea.Fecha</li>
-            <li>@Tarea.Finalizada</li>
+            <li>@tarea.Titulo</li>
+            <li>@tarea.Descripcion</li>
+            <li>@tarea.Fecha</li>
+            <li>@tarea.Finalizada</li>
         }
         </ul>
 </div>

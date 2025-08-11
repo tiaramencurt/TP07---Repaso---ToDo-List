@@ -21,7 +21,7 @@ public class Usuario
     [JsonProperty]
     public string Foto {get; private set;}
     [JsonProperty]
-    public DateTime UltimoLogin {get; private set;}
+    public DateTime? UltimoLogin { get; private set; }
     public Usuario()
     {
     }
