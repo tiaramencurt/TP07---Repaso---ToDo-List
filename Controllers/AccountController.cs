@@ -4,17 +4,13 @@ using TP07.Models;
 
 namespace TP07.Controllers;
 
-public class HomeController : Controller
+public class AccountController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public AccountController(ILogger<HomeController> logger)
     {
         _logger = logger;
     }
-
-    public IActionResult Index()
-    {
-        return View();
-    }
+    
 }

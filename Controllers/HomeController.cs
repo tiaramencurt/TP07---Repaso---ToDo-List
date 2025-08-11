@@ -17,33 +17,77 @@ public class HomeController : Controller
     {
         return RedirectToAction("Login", "Account");
     }
-
-    public IActionResult CargarTareas(int idUsuario)
+    public IActionResult MostrarTareas()
     {
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
         List<Tarea> tareas = BD.TraerTareas(idUsuario);
         return View("VerTareas", tareas);
     }
-
-    public IActionResult CrearTarea(string Titulo, string Descripcion, DateTime fecha, bool Finalizada)
+    public IActionResult CrearTarea()
     {
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
         return View("CrearTarea");
     }
-
-    public IActionResult FinalizarTarea(bool Finalizada)
+    [HttpPost]
+    public IActionResult CrearTarea(string Titulo, string Descripcion, DateTime Fecha)
     {
-        // nc si falta algo
-        return View("VerTareas");
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
+        Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
+        BD.CrearTarea(tarea);
+        return RedirectToAction("MostrarTareas");
     }
-
-    public IActionResult EliminarTarea(bool Finalizada)
-    { 
-        // faltan cosas
-        return View("VerTareas");
-    }
-
-    public IActionResult EditarTarea(string Titulo, string Descripcion, DateTime fecha, bool Finalizada)
+    public IActionResult FinalizarTarea(int idTarea)
     {
-        return View("ModificarTarea");
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        BD.FinalizarTarea(idTarea);
+        return RedirectToAction("MostrarTareas");
     }
-
+    public IActionResult EliminarTarea(int idTarea)
+    {
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        BD.EliminarTarea(idTarea);
+        return RedirectToAction("MostrarTareas");
+    }
+    public IActionResult EditarTarea(int idTarea)
+    {
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        Tarea tarea = ; //Hay que crear metodo TraerTarea en BD
+        if (tarea == null)
+        {
+            return RedirectToAction("MostrarTareas");
+        }
+        return View("ModificarTarea", tarea);
+    }
+    [HttpPost]
+    public IActionResult EditarTarea(int Id, string Titulo, string Descripcion, DateTime Fecha)
+    {
+        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
+        Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
+        BD.ActualizarTarea(tarea, Id);
+        return RedirectToAction("MostrarTareas");
+    }
 }
