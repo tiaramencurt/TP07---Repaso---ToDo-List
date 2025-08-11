@@ -25,7 +25,8 @@ public class HomeController : Controller
         }
         int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
         List<Tarea> tareas = BD.TraerTareas(idUsuario);
-        return View("VerTareas", tareas);
+        ViewBag.tareas = tareas;
+        return View("VerTareas");
     }
     public IActionResult CrearTarea()
     {
@@ -76,7 +77,8 @@ public class HomeController : Controller
         {
             return RedirectToAction("MostrarTareas");
         }
-        return View("ModificarTarea", tarea);
+        ViewBag.tarea = tarea;
+        return View("ModificarTarea");
     }
     [HttpPost]
     public IActionResult EditarTarea(int Id, string Titulo, string Descripcion, DateTime Fecha)

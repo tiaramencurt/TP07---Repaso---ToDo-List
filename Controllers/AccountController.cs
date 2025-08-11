@@ -12,5 +12,53 @@ public class AccountController : Controller
     {
         _logger = logger;
     }
-    
+
+    public IActionResult Login()
+    {
+        ViewBag.mailExiste = true;
+        return View("Login");
+    }
+    [HttpPost]
+    public IActionResult Login(string Usuario, string Contraseña)
+    {
+        Usuario usuario = BD.Login(Usuario, Contraseña);
+        if (usuario == null)
+        {
+            ViewBag.mailExiste = false;
+            return View("Login");
+        }
+        HttpContext.Session.SetInt32("IdUsuario", usuario.Id);
+        BD.ActualizarFechaLogin(usuario.Id);
+        return RedirectToAction("MostrarTareas", "Home");
+    }
+    public IActionResult CerrarSesion()
+    {
+        HttpContext.Session.Remove("IdUsuario");
+        return RedirectToAction("Login");
+    }
+    public IActionResult Registrarse()
+    {
+        ViewBag.contraseñaCoincide = true;
+        ViewBag.mailExiste = false;
+        return View("Registro");
+    }
+    [HttpPost]
+    public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, string Foto)
+    {
+        if (Contraseña1 != Contraseña2)
+        {
+            ViewBag.mailExiste = false;
+            ViewBag.contraseñaCoincide = false;
+            return View("Registro");
+        }
+        Usuario nuevoUsuario = new Usuario(Usuario, Contraseña1, Nombre, Apellido, Foto);
+        bool registro = BD.Registrarse(nuevoUsuario);
+        if (!registro)
+        {
+            ViewBag.contraseñaCoincide = true;
+            ViewBag.mailExiste = true;
+            return View("Registro");
+        }
+        return RedirectToAction("Login");
+    }
 }
