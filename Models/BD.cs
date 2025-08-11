@@ -19,6 +19,15 @@ public static class BD
             return usuario;
         }
     }
+    public static Tarea TraerTarea(int IdTarea)
+    {
+        string query = "SELECT * FROM Tareas WHERE Id = @Id";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            Tarea tarea = connection.QueryFirstOrDefault<Tarea>(query, new {Id = IdTarea});
+            return tarea;
+        }
+    }
     public static Usuario Login(string username, string password)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))

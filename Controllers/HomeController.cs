@@ -71,7 +71,7 @@ public class HomeController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-        Tarea tarea = ; //Hay que crear metodo TraerTarea en BD
+        Tarea tarea = BD.TraerTarea(idTarea);
         if (tarea == null)
         {
             return RedirectToAction("MostrarTareas");
