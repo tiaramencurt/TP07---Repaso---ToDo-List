@@ -3,10 +3,10 @@
 }
 
 
-<a href='@Url.Action("IrIniciarSesion", "Home")'>Iniciar sesión</a>
+<a href='@Url.Action("Login", "Home")'>Iniciar sesión</a>
 <div>
     <h1>Registrarse</h1>
-    <form action='@Url.Action("Registrarse", "Home")' method="post">
+    <form action='@Url.Action("Registrarse", "Account")' method="post">
         <input type="text" name="Usuario" placeholder="Ingresar nombre de usuario" required/>
         <input type="password" name="Contraseña1" placeholder="Ingresar contraseña" required/>
         <input type="password" name="Contraseña2" placeholder="Ingresar de nuevo la contraseña" required/>

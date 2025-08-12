@@ -9,7 +9,7 @@ namespace TP07.Models;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost; DataBase=BD; Integrated Security=True; TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=localhost; DataBase=Tp7-ToDoList; Integrated Security=True; TrustServerCertificate=True;";
     public static Usuario TraerUsuario(string username)
     {
         string query = "SELECT * FROM Usuarios WHERE Username = @Username";
