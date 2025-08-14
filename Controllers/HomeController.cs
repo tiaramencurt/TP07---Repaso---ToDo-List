@@ -19,18 +19,18 @@ public class HomeController : Controller
     }
     public IActionResult MostrarTareas()
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
-        int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
+        int idUsuario = (int)HttpContext.Session.GetString("IdUsuario");
         List<Tarea> tareas = BD.TraerTareas(idUsuario);
         ViewBag.tareas = tareas;
         return View("VerTareas");
     }
     public IActionResult CrearTarea()
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
@@ -39,18 +39,18 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult CrearTarea(string Titulo, string Descripcion, DateTime Fecha)
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
-        int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
+        int idUsuario = (int)HttpContext.Session.GetString("IdUsuario");
         Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
         BD.CrearTarea(tarea);
         return RedirectToAction("MostrarTareas");
     }
     public IActionResult FinalizarTarea(int idTarea)
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
@@ -59,7 +59,7 @@ public class HomeController : Controller
     }
     public IActionResult EliminarTarea(int idTarea)
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
@@ -68,7 +68,7 @@ public class HomeController : Controller
     }
     public IActionResult EditarTarea(int idTarea)
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
@@ -83,11 +83,11 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult EditarTarea(int Id, string Titulo, string Descripcion, DateTime Fecha)
     {
-        if (HttpContext.Session.GetInt32("IdUsuario") == null)
+        if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
-        int idUsuario = (int)HttpContext.Session.GetInt32("IdUsuario");
+        int idUsuario = (int)HttpContext.Session.GetStirng("IdUsuario");
         Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
         BD.ActualizarTarea(tarea, Id);
         return RedirectToAction("MostrarTareas");

@@ -26,9 +26,10 @@ public class AccountController : Controller
         if (usuario == null)
         {
             ViewBag.mailExiste = false;
+            ViewBag.contraseñaCoincide = true;
             return View("Login");
         }
-        HttpContext.Session.SetInt32("IdUsuario", usuario.Id);
+        HttpContext.Session.SetString("IdUsuario", usuario.Id.ToString());
         BD.ActualizarFechaLogin(usuario.Id);
         return RedirectToAction("MostrarTareas", "Home");
     }
