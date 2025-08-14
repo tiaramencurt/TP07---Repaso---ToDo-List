@@ -63,10 +63,10 @@ public static class BD
     }
     public static void CrearTarea(Tarea tarea)
     {
-        string query = "INSERT INTO Tareas (Titulo, Descripcion, Fecha, Finalizada, Eliminada, IdUsuario) VALUES (@PTitulo, @PDescripcion, @PFecha, @PFinalizada, @PEliminada, @PIdUsuario)";
+        string query = "INSERT INTO Tareas (Titulo, Descripcion, FechaLimite, Finalizada, Eliminada, IdUsuario) VALUES (@PTitulo, @PDescripcion, @PFechaLimite, @PFinalizada, @PEliminada, @PIdUsuario)";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario  });
+            connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFechaLimite = tarea.FechaLimite, PFinalizada = tarea.Finalizada, PEliminada = tarea.Eliminada, PIdUsuario = tarea.IdUsuario  });
         }
     }
 
@@ -81,10 +81,10 @@ public static class BD
 
     public static void ActualizarTarea(Tarea tarea, int Id)
     {
-        string query = @"UPDATE Tareas SET Titulo = @PTitulo, Descripcion = @PDescripcion, Fecha = @PFecha WHERE Id = @PId";
+        string query = @"UPDATE Tareas SET Titulo = @PTitulo, Descripcion = @PDescripcion, FechaLimite = @PFechaLimite WHERE Id = @PId";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFecha = tarea.Fecha, PId = Id });
+            connection.Execute(query, new { PTitulo = tarea.Titulo, PDescripcion = tarea.Descripcion, PFechaLimite = tarea.FechaLimite, PId = Id });
         }
     }
 

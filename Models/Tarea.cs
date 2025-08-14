@@ -15,7 +15,7 @@ public class Tarea
     [JsonProperty]
     public string Descripcion {get; private set;}
     [JsonProperty]
-    public DateTime Fecha {get; private set;}
+    public DateTime FechaLimite {get; private set;}
     [JsonProperty]
     public bool Finalizada {get; private set;}
     [JsonProperty]
@@ -29,7 +29,7 @@ public class Tarea
     {
         this.Titulo = titulo;
         this.Descripcion = descripcion;
-        this.Fecha = fecha;
+        this.FechaLimite = fecha;
         this.Finalizada = false;
         this.Eliminada = false;
         this.IdUsuario = idUsuario;
