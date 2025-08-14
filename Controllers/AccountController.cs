@@ -45,6 +45,26 @@ public class AccountController : Controller
         return View("Registro");
     }
     [HttpPost]
+   /* public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, HttpPostedFileBase Foto)
+    {
+        if (Contraseña1 != Contraseña2)
+        {
+            ViewBag.mailExiste = false;
+            ViewBag.contraseñaCoincide = false;
+            return View("Registro");
+        }
+        string rutaDestino = Server.MapPath("~/imagenes/" + Foto.FileName);
+        foto.SaveAs(rutaDestino);
+        Usuario nuevoUsuario = new Usuario(Usuario, Contraseña1, Nombre, Apellido, Foto.FileName);
+        bool registro = BD.Registrarse(nuevoUsuario);
+        if (!registro)
+        {
+            ViewBag.contraseñaCoincide = true;
+            ViewBag.mailExiste = true;
+            return View("Registro");
+        }
+        return RedirectToAction("Login"); 
+    }*/
     public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, string Foto)
     {
         if (Contraseña1 != Contraseña2)
@@ -61,6 +81,6 @@ public class AccountController : Controller
             ViewBag.mailExiste = true;
             return View("Registro");
         }
-        return RedirectToAction("Login");
+        return RedirectToAction("Login"); 
     }
 }

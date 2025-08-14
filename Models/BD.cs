@@ -99,10 +99,10 @@ public static class BD
 
     public static void ActualizarFechaLogin(int IdUsuario)
     {
-        string query = "UPDATE Usuarios SET FechaLogin = @FechaLogin WHERE Id = @IdUsuario";
+        string query = "UPDATE Usuarios SET UltimoLogin = @UltimoLogin WHERE Id = @IdUsuario";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { FechaLogin = DateTime.Now, IdUsuario = IdUsuario });
+            connection.Execute(query, new { UltimoLogin = DateTime.Now, IdUsuario = IdUsuario });
         }
     }
 }
