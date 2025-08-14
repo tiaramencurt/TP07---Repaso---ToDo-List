@@ -23,7 +23,7 @@ public class HomeController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-        int idUsuario = (int)HttpContext.Session.GetString("IdUsuario");
+        int idUsuario =int.Parse(HttpContext.Session.GetString("IdUsuario"));
         List<Tarea> tareas = BD.TraerTareas(idUsuario);
         ViewBag.tareas = tareas;
         return View("VerTareas");
@@ -87,7 +87,7 @@ public class HomeController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-        int idUsuario = (int)HttpContext.Session.GetStirng("IdUsuario");
+        int idUsuario = int.Parse(HttpContext.Session.GetStirng("IdUsuario"));
         Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
         BD.ActualizarTarea(tarea, Id);
         return RedirectToAction("MostrarTareas");
