@@ -18,10 +18,10 @@
             <a href="@Url.Action("EditarTarea", "Home", new { idTarea = tarea.Id })">Modificar</a>
             @if(ViewBag.Eliminadas)
             {
-                <a href="@Url.Action("RecuperarTarea", "Home", new { idTarea = tarea.Id })">Recuperar</a>
+                <a href="@Url.Action("EliminarRecuperarTarea", "Home", new { idTarea = tarea.Id, EliminarRecuperar = false })">Recuperar</a>
             }else
             {
-                <a href="@Url.Action("EliminarTarea", "Home", new { idTarea = tarea.Id })">Eliminar</a>
+                <a href="@Url.Action("EliminarRecuperarTarea", "Home", new { idTarea = tarea.Id, EliminarRecuperar = true })">Eliminar</a>
             }
             @if (!tarea.Finalizada)
             {

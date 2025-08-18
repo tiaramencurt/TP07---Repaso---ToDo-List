@@ -59,22 +59,13 @@ public class HomeController : Controller
         BD.FinalizarTarea(idTarea);
         return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
-    public IActionResult EliminarTarea(int idTarea)
+    public IActionResult EliminarRecuperarTarea(int idTarea, bool EliminarRecuperar)
     {
         if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
-        BD.EliminarRecuperarTarea(idTarea, true);
-        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
-    }
-    public IActionResult RecuperarTarea(int idTarea)
-    {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
-        {
-            return RedirectToAction("Login", "Account");
-        }
-        BD.EliminarRecuperarTarea(idTarea, false);
+        BD.EliminarRecuperarTarea(idTarea, EliminarRecuperar);
         return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult EditarTarea(int idTarea)
