@@ -19,12 +19,21 @@ public static class BD
             return usuario;
         }
     }
+    public static Usuario TraerUsuarioPorId(int IdUsuario)
+    {
+        string query = "SELECT * FROM Usuarios WHERE Id = @PIdUsuario";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            Usuario usuario = connection.QueryFirstOrDefault<Usuario>(query, new { PIdUsuario = IdUsuario});
+            return usuario;
+        }
+    }
     public static Tarea TraerTarea(int IdTarea)
     {
         string query = "SELECT * FROM Tareas WHERE Id = @Id";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            Tarea tarea = connection.QueryFirstOrDefault<Tarea>(query, new {Id = IdTarea});
+            Tarea tarea = connection.QueryFirstOrDefault<Tarea>(query, new { Id = IdTarea });
             return tarea;
         }
     }

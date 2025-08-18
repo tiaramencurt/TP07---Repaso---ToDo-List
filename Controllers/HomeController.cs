@@ -25,6 +25,7 @@ public class HomeController : Controller
         }
         int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
         List<Tarea> tareas = BD.TraerTareas(idUsuario, Eliminadas);
+        ViewBag.Usuario = BD.TraerUsuarioPorId(idUsuario);
         ViewBag.tareas = tareas;
         ViewBag.Eliminadas = Eliminadas;
         return View("MostrarTareas");
