@@ -17,16 +17,17 @@ public class HomeController : Controller
     {
         return RedirectToAction("Login", "Account");
     }
-    public IActionResult MostrarTareas()
+    public IActionResult MostrarTareas(bool Eliminadas)
     {
         if (HttpContext.Session.GetString("IdUsuario") == null)
         {
             return RedirectToAction("Login", "Account");
         }
         int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
-        List<Tarea> tareas = BD.TraerTareas(idUsuario, false);
+        List<Tarea> tareas = BD.TraerTareas(idUsuario, Eliminadas);
         ViewBag.tareas = tareas;
-        return View("VerTareas");
+        ViewBag.Eliminadas = Eliminadas;
+        return View("MostrarTareas");
     }
     public IActionResult CrearTarea()
     {
@@ -46,7 +47,7 @@ public class HomeController : Controller
         int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
         Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
         BD.CrearTarea(tarea);
-        return RedirectToAction("MostrarTareas");
+        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult FinalizarTarea(int idTarea)
     {
@@ -55,7 +56,7 @@ public class HomeController : Controller
             return RedirectToAction("Login", "Account");
         }
         BD.FinalizarTarea(idTarea);
-        return RedirectToAction("MostrarTareas");
+        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult EliminarTarea(int idTarea)
     {
@@ -64,7 +65,7 @@ public class HomeController : Controller
             return RedirectToAction("Login", "Account");
         }
         BD.EliminarRecuperarTarea(idTarea, true);
-        return RedirectToAction("MostrarTareas");
+        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult RecuperarTarea(int idTarea)
     {
@@ -73,7 +74,7 @@ public class HomeController : Controller
             return RedirectToAction("Login", "Account");
         }
         BD.EliminarRecuperarTarea(idTarea, false);
-        return RedirectToAction("MostrarTareas");
+        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult EditarTarea(int idTarea)
     {
@@ -84,7 +85,7 @@ public class HomeController : Controller
         Tarea tarea = BD.TraerTarea(idTarea);
         if (tarea == null)
         {
-            return RedirectToAction("MostrarTareas");
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
         ViewBag.tarea = tarea;
         return View("ModificarTarea");
@@ -99,6 +100,6 @@ public class HomeController : Controller
         int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
         Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
         BD.ActualizarTarea(tarea, Id);
-        return RedirectToAction("MostrarTareas");
+        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
 }

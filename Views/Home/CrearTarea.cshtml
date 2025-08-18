@@ -1,11 +1,13 @@
 @{
     ViewData["Title"] = "Crear tarea";
 }
-
-<form action='@Url.Action("CrearTarea", "Home")' method="post">
-    <input type="text" name="Titulo" placeholder="Ingresar tarea" required/>
-    <input type="text" name="Descripcion" placeholder="Ingresar descripción" required/>
-    <input type="date" name="Fecha" placeholder="Ingresar fecha de realización de la tarea" required/>
-    <input type="checkbox" name="Finalizada" value="Finalizada"> ¿Está finalizada?
-    <input type="submit" value="Ingresar datos"/>
-</form>
+<section>
+    <h1>Crear Tarea</h1>
+    <form action='@Url.Action("CrearTarea", "Home")' method="post">
+        <input type="text" name="Titulo" placeholder="Ingresar tarea" required/>
+        <input type="text" name="Descripcion" placeholder="Ingresar descripción" required/>
+        <input type="date" name="Fecha" placeholder="Ingresar fecha de realización de la tarea" required/>
+        <input type="checkbox" name="Finalizada" value="Finalizada"> ¿Está finalizada?
+        <input type="submit" value="Ingresar datos"/>
+    </form>
+</section>

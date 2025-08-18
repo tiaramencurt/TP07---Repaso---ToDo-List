@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Lista de tareas";
+}
+
+<section class="usuario">
+
+</section>
+<section class="acciones">
+    <a href='@Url.Action("CrearTarea", "Home")'>Agregar tarea</a>
+    @if(ViewBag.Eliminadas)
+    {
+        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = false })">Ver tareas no eliminadas</a>
+    }else
+    {
+        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = true })">Ver tareas eliminadas</a>
+    }
+</section>
+<section class action="tareas">
+    <h2>Tareas:</h2>
+        <div>
+        @foreach(Tarea tarea in ViewBag.tareas)
+        {
+            <p>@tarea.Titulo</p>
+            <p>@tarea.Descripcion</p>
+            <p>@tarea.FechaLimite</p>
+            <a href="@Url.Action("EditarTarea", "Home", new { idTarea = tarea.Id })">Modificar</a>
+            @if(ViewBag.Eliminadas)
+            {
+                <a href="@Url.Action("RecuperarTarea", "Home", new { idTarea = tarea.Id })">Recuperar</a>
+            }else
+            {
+                <a href="@Url.Action("EliminarTarea", "Home", new { idTarea = tarea.Id })">Eliminar</a>
+            }
+            @if (!tarea.Finalizada)
+            {
+                <a href="@Url.Action("FinalizarTarea", "Home", new { idTarea = tarea.Id })">Finalizar</a>
+            }else
+            {
+                <p>Tarea finalizada</p>
+            }
+        }
+        </div>
+</section>

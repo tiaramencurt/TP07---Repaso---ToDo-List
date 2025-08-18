@@ -31,7 +31,7 @@ public class AccountController : Controller
         }
         HttpContext.Session.SetString("IdUsuario", usuario.Id.ToString());
         BD.ActualizarFechaLogin(usuario.Id);
-        return RedirectToAction("MostrarTareas", "Home");
+        return RedirectToAction("MostrarTareas", "Home", new { Eliminadas = false });
     }
     public IActionResult CerrarSesion()
     {
