@@ -7,17 +7,6 @@
     <h3>@ViewBag.Usuario.Nombre @ViewBag.Usuario.Apellido</h3>
     <h4>@ViewBag.Usuario.Username</h4>
 </section>
-<section class="acciones">
-    <a href='@Url.Action("CrearTarea", "Home")'>Agregar tarea</a>
-    @if(ViewBag.Eliminadas)
-    {
-        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = false })">Ver tareas no eliminadas</a>
-    }else
-    {
-        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = true })">Ver tareas eliminadas</a>
-    }
-    <a href='@Url.Action("CerrarSesion", "Account")'>Cerrar Sesión</a>
-</section>
 <section class action="tareas">
     <h2>Tareas:</h2>
         <div>

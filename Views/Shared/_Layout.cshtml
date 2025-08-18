@@ -10,7 +10,11 @@
 
 <body>
     <header>
-        NombreProyecto
+        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = false })">MIDEMA</a>
+        <a href='@Url.Action("CrearTarea", "Home")'>Agregar tarea</a>
+        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = false })">Ver tareas no eliminadas</a>
+        <a href="@Url.Action("MostrarTareas", "Home", new { Eliminadas = true })">Ver tareas eliminadas</a>
+        <a href='@Url.Action("CerrarSesion", "Account")'>Cerrar Sesión</a>
     </header>
 
     <main role="main">
@@ -18,7 +22,8 @@
     </main>
 
     <footer>
-        &copy; @DateTime.Now.Year - NombreProyecto
+        &copy; @DateTime.Now.Year - MIDEMA
+        <p>Tus favs IARAAAAAAAAAAAAAAA</p>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
