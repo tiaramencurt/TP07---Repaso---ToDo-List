@@ -45,26 +45,46 @@ public class AccountController : Controller
         return View("Registro");
     }
     [HttpPost]
-    public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, HttpPostedFileBase Foto)
+    [HttpPost]
+public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, IFormFile Foto)
+{
+    if (Contraseña1 != Contraseña2)
     {
-        if (Contraseña1 != Contraseña2)
-        {
-            ViewBag.mailExiste = false;
-            ViewBag.contraseñaCoincide = false;
-            return View("Registro");
-        }
-        string rutaDestino = Server.MapPath("~/imagenes/" + Foto.FileName);
-        foto.SaveAs(rutaDestino);
-        Usuario nuevoUsuario = new Usuario(Usuario, Contraseña1, Nombre, Apellido, Foto.FileName);
-        bool registro = BD.Registrarse(nuevoUsuario);
-        if (!registro)
-        {
-            ViewBag.contraseñaCoincide = true;
-            ViewBag.mailExiste = true;
-            return View("Registro");
-        }
-        return RedirectToAction("Login"); 
+        ViewBag.mailExiste = false;
+        ViewBag.contraseñaCoincide = false;
+        return View("Registro");
     }
+
+    string fileName = null;
+    if (Foto != null && Foto.Length > 0)
+    {
+        fileName = Path.GetFileName(Foto.FileName);
+        string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagenes");
+        if (!Directory.Exists(uploadsFolder))
+        {
+            Directory.CreateDirectory(uploadsFolder);
+        }
+        string filePath = Path.Combine(uploadsFolder, fileName);
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            Foto.CopyTo(stream);
+        }
+    }
+    else
+    {
+        fileName = "default.png";
+    }
+
+    Usuario nuevoUsuario = new Usuario(Usuario, Contraseña1, Nombre, Apellido, fileName);
+    bool registro = BD.Registrarse(nuevoUsuario);
+    if (!registro)
+    {
+        ViewBag.contraseñaCoincide = true;
+        ViewBag.mailExiste = true;
+        return View("Registro");
+    }
+    return RedirectToAction("Login"); 
+}
     /*public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, string Foto)
     {
         if (Contraseña1 != Contraseña2)
