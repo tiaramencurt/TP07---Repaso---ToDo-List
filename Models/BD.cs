@@ -52,12 +52,12 @@ public static class BD
             return false;
         }
     }
-    public static List<Tarea> TraerTareas(int IdUsuario)
+    public static List<Tarea> TraerTareas(int IdUsuario, bool Eliminada)
     {
-        string query = "SELECT * FROM Tareas WHERE IdUsuario = @pIdUsuario AND Eliminada = 0";
+        string query = "SELECT * FROM Tareas WHERE IdUsuario = @pIdUsuario AND Eliminada = @pEliminada";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            List<Tarea> tareas = connection.Query<Tarea>(query, new { pIdUsuario = IdUsuario }).ToList();
+            List<Tarea> tareas = connection.Query<Tarea>(query, new { pIdUsuario = IdUsuario, pEliminada = Eliminada }).ToList();
             return tareas;
         }
     }
@@ -70,12 +70,12 @@ public static class BD
         }
     }
 
-    public static void EliminarTarea(int IdTarea)
+    public static void EliminarRecuperarTarea(int IdTarea, bool Eliminar)
     {
-        string query = "DELETE FROM Tareas WHERE Id = @IdTarea";
+        string query = @"UPDATE Tareas SET Eliminada = @PEliminar WHERE Id = @PId";
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { IdTarea = IdTarea });
+            connection.Execute(query, new { PId = IdTarea , PEliminar = Eliminar});
         }
     }
 

@@ -24,7 +24,7 @@ public class HomeController : Controller
             return RedirectToAction("Login", "Account");
         }
         int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
-        List<Tarea> tareas = BD.TraerTareas(idUsuario);
+        List<Tarea> tareas = BD.TraerTareas(idUsuario, false);
         ViewBag.tareas = tareas;
         return View("VerTareas");
     }
@@ -63,7 +63,16 @@ public class HomeController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-        BD.EliminarTarea(idTarea);
+        BD.EliminarRecuperarTarea(idTarea, true);
+        return RedirectToAction("MostrarTareas");
+    }
+    public IActionResult RecuperarTarea(int idTarea)
+    {
+        if (HttpContext.Session.GetString("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        BD.EliminarRecuperarTarea(idTarea, false);
         return RedirectToAction("MostrarTareas");
     }
     public IActionResult EditarTarea(int idTarea)
