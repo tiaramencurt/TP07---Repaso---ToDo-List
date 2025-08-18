@@ -45,7 +45,7 @@ public class AccountController : Controller
         return View("Registro");
     }
     [HttpPost]
-   /* public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, HttpPostedFileBase Foto)
+    public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, HttpPostedFileBase Foto)
     {
         if (Contraseña1 != Contraseña2)
         {
@@ -64,8 +64,8 @@ public class AccountController : Controller
             return View("Registro");
         }
         return RedirectToAction("Login"); 
-    }*/
-    public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, string Foto)
+    }
+    /*public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, string Foto)
     {
         if (Contraseña1 != Contraseña2)
         {
@@ -82,5 +82,5 @@ public class AccountController : Controller
             return View("Registro");
         }
         return RedirectToAction("Login"); 
-    }
+    }*/
 }
