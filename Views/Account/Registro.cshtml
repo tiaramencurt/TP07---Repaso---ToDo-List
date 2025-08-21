@@ -6,13 +6,13 @@
 <a href='@Url.Action("Login", "Account")'>Iniciar sesión</a>
 <div>
     <h1>Registrarse</h1>
-    <form action='@Url.Action("Registrarse", "Account")' method="post">
+    <form action='@Url.Action("Registrarse", "Account")' method="post" enctype="multipart/from-data">
         <input type="text" name="Usuario" placeholder="Ingresar nombre de usuario" required/>
         <input type="password" name="Contraseña1" placeholder="Ingresar contraseña" required/>
         <input type="password" name="Contraseña2" placeholder="Ingresar de nuevo la contraseña" required/>
         <input type="text" name="Nombre" placeholder="Ingresar nombre" required/>
         <input type="text" name="Apellido" placeholder="Ingresar apellido" required/>
-        <input type="file" name="Foto" enctype="multipart/from-data"/>
+        <input type="file" name="Foto"/>
         <!-- <input type="text" name="Foto"/> -->
         <input type="submit" value="Guardar datos" required/>
         @if(ViewBag.mailExiste)
