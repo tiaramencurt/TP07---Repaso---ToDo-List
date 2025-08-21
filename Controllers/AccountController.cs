@@ -71,7 +71,6 @@ public class AccountController : Controller
         {
             Directory.CreateDirectory(carpeta);
         }
-        // Generamos un nombre Ãºnico para evitar sobreescribir
         nombreFoto = Guid.NewGuid().ToString() + Path.GetExtension(Foto.FileName);
         rutaDestino = Path.Combine(carpeta, nombreFoto);
         using (var stream = new FileStream(rutaDestino, FileMode.Create))
