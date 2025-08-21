@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP07.Models;
+using BCrypt.Net;
 
 namespace TP07.Controllers;
 
@@ -22,7 +23,8 @@ public class AccountController : Controller
     [HttpPost]
     public IActionResult Login(string Usuario, string Contraseña)
     {
-        Usuario usuario = BD.Login(Usuario, Contraseña);
+        string hash = BCrypt.Net.BCrypt.HashPassword(Contraseña);
+        Usuario usuario = BD.Login(Usuario, hash);
         if (usuario == null)
         {
             ViewBag.mailExiste = false;
@@ -73,8 +75,8 @@ public class AccountController : Controller
         {
             fileName = "default.png";
         }
-
-        Usuario nuevoUsuario = new Usuario(Usuario, Contraseña1, Nombre, Apellido, fileName);
+        string hash = BCrypt.Net.BCrypt.HashPassword(Contraseña1);
+        Usuario nuevoUsuario = new Usuario(Usuario, hash, Nombre, Apellido, fileName);
         bool registro = BD.Registrarse(nuevoUsuario);
         if (!registro)
         {
