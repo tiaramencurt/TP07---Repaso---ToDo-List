@@ -22,6 +22,7 @@
             <p>@tarea.Descripcion</p>
             <p>@tarea.FechaLimite</p>
             <a href="@Url.Action("EditarTarea", "Home", new { idTarea = tarea.Id })">Modificar</a>
+            <a href='@Url.Action("CompartirTarea", "Home", new { idTarea = tarea.Id })'>Compartir Tarea</a>
             @if(ViewBag.Eliminadas)
             {
                 <a href="@Url.Action("EliminarRecuperarTarea", "Home", new { idTarea = tarea.Id, EliminarRecuperar = false })">Recuperar</a>
