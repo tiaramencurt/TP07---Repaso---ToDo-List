@@ -8,7 +8,13 @@
     <h4>@ViewBag.Usuario.Username</h4>
 </section>
 <section class action="tareas">
-    <h2>Tareas:</h2>
+    @if(ViewBag.Eliminadas)
+    {
+        <h2>Tareas eliminadas:</h2>
+    }else
+    {
+        <h2>Tareas:</h2>
+    }
         <div>
         @foreach(Tarea tarea in ViewBag.tareas)
         {
