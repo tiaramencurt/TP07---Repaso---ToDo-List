@@ -61,7 +61,7 @@ public class AccountController : Controller
     [HttpPost]
     public IActionResult Registrarse(string Usuario, string Contraseña1, string Contraseña2, string Nombre, string Apellido, IFormFile Foto)
     {
-        if (Usuario == null || Contraseña1 == null || Contraseña2 == null || Nombre == null || Apellido == null || Foto == null)
+        if (Usuario == null || Contraseña1 == null || Contraseña2 == null || Nombre == null || Apellido == null)
         {
             return RedirectToAction("Registrarse");
         }else
