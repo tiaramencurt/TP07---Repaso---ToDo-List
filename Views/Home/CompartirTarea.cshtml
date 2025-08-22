@@ -1,7 +1,5 @@
 @{
     ViewBag.Title = "Compartir Tarea";
-    var tarea = ViewBag.tarea as Tarea;
-    bool usuarioExiste = ViewBag.UsuarioExiste ?? true;
 }
 <div>
     <h4>Vas a compartir la siguiente tarea:</h4>
@@ -12,7 +10,7 @@
 </div>
 <form action='@Url.Action("CompartirTarea", "Home", new { idTarea = ViewBag.tarea.Id})' method="post">
     <input type="text" name="username" placeholder="Ingresar usuario" required/>
-    @if (!usuarioExiste)
+    @if(!ViewBag.UsuarioExiste)
     {
         <p>El usuario ingresado no existe. Por favor intente con otro nombre de usuario.</p>
     }

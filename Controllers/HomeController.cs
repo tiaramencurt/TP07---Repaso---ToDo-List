@@ -151,20 +151,19 @@ public class HomeController : Controller
         {
             return RedirectToAction("Login", "Account");
         }
-        Usuario usuarioDestino = BD.TraerUsuarioPorUsername(username);
+        Usuario usuarioDestino = BD.TraerUsuario(username);
         if (usuarioDestino == null)
         {
             ViewBag.UsuarioExiste = false;
-            return RedirectToAction("CompartirTarea", new { idTarea = idTarea });
+            ViewBag.tarea = BD.TraerTarea(idTarea);
+            return View("CompartirTarea");
         }
         Tarea tareaOriginal = BD.TraerTarea(idTarea);
         if (tareaOriginal == null)
         {
             return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
-        Tarea tareaNueva = new Tarea(tareaOriginal.Titulo, tareaOriginal.Descripcion, tareaOriginal.Fecha, usuarioDestino.IdUsuario);
-        tareaNueva.Finalizada = tareaOriginal.Finalizada;
-        tareaNueva.Eliminada = tareaOriginal.Eliminada;
+        Tarea tareaNueva = new Tarea(tareaOriginal.Titulo, tareaOriginal.Descripcion, tareaOriginal.FechaLimite, usuarioDestino.Id);
         BD.CrearTarea(tareaNueva);
         return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
