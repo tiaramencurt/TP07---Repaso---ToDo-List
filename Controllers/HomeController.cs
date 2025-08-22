@@ -130,4 +130,42 @@ public class HomeController : Controller
             return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
     }
+    public IActionResult CompartirTarea(int idTarea)
+    {
+        if (HttpContext.Session.GetString("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        ViewBag.tarea = BD.TraerTarea(idTarea);
+        ViewBag.UsuarioExiste = true;
+        return View("CompartirTarea");
+    }
+    [HttpPost]
+    public IActionResult CompartirTarea(int idTarea, string username)
+    {
+        if (username == null)
+        {
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }
+        if (HttpContext.Session.GetString("IdUsuario") == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+        Usuario usuarioDestino = BD.TraerUsuarioPorUsername(username);
+        if (usuarioDestino == null)
+        {
+            ViewBag.UsuarioExiste = false;
+            return RedirectToAction("CompartirTarea", new { idTarea = idTarea });
+        }
+        Tarea tareaOriginal = BD.TraerTarea(idTarea);
+        if (tareaOriginal == null)
+        {
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }
+        Tarea tareaNueva = new Tarea(tareaOriginal.Titulo, tareaOriginal.Descripcion, tareaOriginal.Fecha, usuarioDestino.IdUsuario);
+        tareaNueva.Finalizada = tareaOriginal.Finalizada;
+        tareaNueva.Eliminada = tareaOriginal.Eliminada;
+        BD.CrearTarea(tareaNueva);
+        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+    }
 }
