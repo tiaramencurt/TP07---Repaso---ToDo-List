@@ -19,16 +19,22 @@ public class HomeController : Controller
     }
     public IActionResult MostrarTareas(bool Eliminadas)
     {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
+        if (idTarea == null)
         {
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }else
+        {
+            if (HttpContext.Session.GetString("IdUsuario") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
+            List<Tarea> tareas = BD.TraerTareas(idUsuario, Eliminadas);
+            ViewBag.Usuario = BD.TraerUsuarioPorId(idUsuario);
+            ViewBag.tareas = tareas;
+            ViewBag.Eliminadas = Eliminadas;
+            return View("MostrarTareas");
         }
-        int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
-        List<Tarea> tareas = BD.TraerTareas(idUsuario, Eliminadas);
-        ViewBag.Usuario = BD.TraerUsuarioPorId(idUsuario);
-        ViewBag.tareas = tareas;
-        ViewBag.Eliminadas = Eliminadas;
-        return View("MostrarTareas");
     }
     public IActionResult CrearTarea()
     {
@@ -41,57 +47,87 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult CrearTarea(string Titulo, string Descripcion, DateTime Fecha)
     {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
+        if (Titulo == null || Descripcion == null || Fecha == null)
         {
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("CrearTarea");
+        }else
+        {
+            if (HttpContext.Session.GetString("IdUsuario") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
+            Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
+            BD.CrearTarea(tarea);
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
-        int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
-        Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
-        BD.CrearTarea(tarea);
-        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult FinalizarTarea(int idTarea)
     {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
+        if (idTarea == null)
         {
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }else
+        {
+            if (HttpContext.Session.GetString("IdUsuario") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            BD.FinalizarTarea(idTarea);
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
-        BD.FinalizarTarea(idTarea);
-        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult EliminarRecuperarTarea(int idTarea, bool EliminarRecuperar)
     {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
+        if (idTarea == null || EliminarRecuperar == null)
         {
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }else
+        {
+            if (HttpContext.Session.GetString("IdUsuario") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            BD.EliminarRecuperarTarea(idTarea, EliminarRecuperar);
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
-        BD.EliminarRecuperarTarea(idTarea, EliminarRecuperar);
-        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
     public IActionResult EditarTarea(int idTarea)
     {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
-        {
-            return RedirectToAction("Login", "Account");
-        }
-        Tarea tarea = BD.TraerTarea(idTarea);
-        if (tarea == null)
+        if (idTarea == null)
         {
             return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }else
+        {
+            if (HttpContext.Session.GetString("IdUsuario") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            Tarea tarea = BD.TraerTarea(idTarea);
+            if (tarea == null)
+            {
+                return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+            }
+            ViewBag.tarea = tarea;
+            return View("ModificarTarea");
         }
-        ViewBag.tarea = tarea;
-        return View("ModificarTarea");
     }
     [HttpPost]
     public IActionResult EditarTarea(int Id, string Titulo, string Descripcion, DateTime Fecha)
     {
-        if (HttpContext.Session.GetString("IdUsuario") == null)
+        if (Id == null || Titulo == null || Descripcion == null || Fecha == null)
         {
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
+        }else
+        {
+            if (HttpContext.Session.GetString("IdUsuario") == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
+            Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
+            BD.ActualizarTarea(tarea, Id);
+            return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }
-        int idUsuario = int.Parse(HttpContext.Session.GetString("IdUsuario"));
-        Tarea tarea = new Tarea(Titulo, Descripcion, Fecha, idUsuario);
-        BD.ActualizarTarea(tarea, Id);
-        return RedirectToAction("MostrarTareas", new { Eliminadas = false });
     }
 }
