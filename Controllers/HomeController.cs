@@ -19,7 +19,7 @@ public class HomeController : Controller
     }
     public IActionResult MostrarTareas(bool Eliminadas)
     {
-        if (idTarea == null)
+        if (Eliminadas == null)
         {
             return RedirectToAction("MostrarTareas", new { Eliminadas = false });
         }else
